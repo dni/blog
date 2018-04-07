@@ -6,7 +6,7 @@ permalink: /about/
 
 Hi! My name is Daniel Krahofer
 ---
-I love technology, programming, linux, synthesizer, math, art and countless other things, some people would call me nerd. In 2012 i started my company [dnilabs e.U](https://www.dnilabs.at) which is specialized in all things around the world wide web, especially webdevelopment and hosting.
+I love technology, programming, linux, synthesizer, math, art and countless other things, some people would call me nerd. I'm from Austria and in 2012 i started my company [dnilabs e.U](https://www.dnilabs.at) which is specialized in all things around the world wide web, especially webdevelopment and hosting.
 
 I always wanted something like a blog where i could write about some problems i struggled with and solution for them, fun projects i do for free and with my friends, ideas i wanna talk about, workflow optimisations and maybe my opinion on different news related things like new technology, politics, etc.
 
