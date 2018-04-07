@@ -6,9 +6,22 @@ permalink: /about/
 
 Hi! My name is Daniel Krahofer
 ---
-I love technology, programming, linux, synthesizer, math, art and countless other things, some people would call me nerd. I'm from Austria and in 2012 i started my company [dnilabs e.U](https://www.dnilabs.at) which is specialized in all things around the world wide web, especially webdevelopment and hosting.
+I love technology, programming, linux, synthesizer, math, art and countless other things, some people would call me nerd. I'm from austria and in 2012 i started my company [dnilabs e.U](https://www.dnilabs.at) which is specialized in all things around the world wide web, especially webdevelopment and hosting.
 
 I always wanted something like a blog where i could write about some problems i struggled with and solution for them, fun projects i do for free and with my friends, ideas i wanna talk about, workflow optimisations and maybe opinions on different things like new technology, politics, etc.
 
 <b>Finally</b> in 2018 i spun up this jekyll blog on github pages and now im trying to add new posts whenever i can and hopefully provide something of value for some of you reading this blog.
+
+can i help you?
+---
+you think i can help you with a project? feel free to contact me!
+
+
+irc?
+---
+yes! you can find me at <b>#dnilabs</b> on the irc.freenode.net server.
+
+dni?
+---
+dni is just a short for daniel and in the old days i used dni in irc chat as a nickname.
 
