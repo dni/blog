@@ -12,8 +12,3 @@ I always wanted something like a blog where i could write about some problems i 
 
 <b>Finally</b> in 2018 i spun up this jekyll blog on github pages and now im trying to add new posts whenever i can and hopefully provide something of value for some of you reading this blog.
 
-
-
-Questions, Suggestions, Errors?
----
-If there is anything you want to ask, suggest, say or correct just go to my [github issue site](https://github.com/dni/blog/issues) and feel free to create a new one, i try to reply asap.
