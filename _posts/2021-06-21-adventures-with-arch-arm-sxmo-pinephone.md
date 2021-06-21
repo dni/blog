@@ -63,9 +63,8 @@ package() {
 
 
 
-
 #### building first package
-NOTE: sxmo isnt yet in Pine64-Arch repository
+NOTE: sxmo isnt yet in Pine64-Arch repository so you need to create the below dir and put the PKGBUILD above inside there.
 {% highlight bash %}
 git clone https://github.com/dreemurrs-embedded/Pine64-Arch
 cd Pine64-Arch/PKGBUILDS/sxmo/smxo-st/
