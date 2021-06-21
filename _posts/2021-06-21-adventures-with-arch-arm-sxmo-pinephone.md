@@ -1,9 +1,7 @@
 ---
 layout: post
 title:  "adventures with arch linux arm and sxmo on the pinephone"
-categories: linux pinephone kernel archlinux arm sxmo
 ---
-
 # WIP!
 
 #### Introduction
