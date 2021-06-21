@@ -58,15 +58,40 @@ package() {
 }
 {% endhighlight %}
 
-
-
-
-#### building first package
-NOTE: sxmo isnt yet in Pine64-Arch repository so you need to create the below dir and put the PKGBUILD above inside there.
+#### building the packages
+NOTE: sxmo isnt yet in Pine64-Arch repository so you need to create the below dir and put the PKGBUILD above inside there. for example:
 {% highlight bash %}
 git clone https://github.com/dreemurrs-embedded/Pine64-Arch
 cd Pine64-Arch/PKGBUILDS/sxmo/smxo-st/
 makepkg -s
+{% endhighlight %}
+
+#### next PKGBUILD sxmo-dwm
+same as sxmo-st
+{% highlight bash %}
+# Maintainer: dni <office@dnilabs.com>
+pkgname=sxmo-dwm
+pkgver=6.2.12
+pkgrel=0
+pkgdesc="Dwm fork for Sxmo UI; supports volume-key hotkeys, swallow, keyboard, among other patches"
+arch=('x86_64' 'armv7h' 'aarch64')
+url="https://git.sr.ht/~mil/sxmo-dwm"
+license=('MIT')
+depends=('xorg-server')
+makedepends=('make' 'freetype2' 'libx11' 'libxinerama' 'libxft')
+provides=('dwm')
+source=("$pkgname-$pkgver.tar.gz::https://git.sr.ht/~mil/sxmo-dwm/archive/$pkgver.tar.gz")
+sha512sums=('842d93eb51204059e2f10c78dbf61f0239fef176d768b43a4d0b5f39a5ec452546e9fa77bc580a496f57f5a8f90a5576aa59a8964ffb0f86be2e454aec2b27c5')
+
+build() {
+  cd "$pkgname-$pkgver"
+	make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+	make PREFIX=/usr DESTDIR="$pkgdir" install
+}
 {% endhighlight %}
 
 

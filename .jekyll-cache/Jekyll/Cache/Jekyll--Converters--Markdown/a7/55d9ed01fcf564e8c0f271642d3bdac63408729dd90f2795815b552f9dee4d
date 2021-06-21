@@ -1,4 +1,4 @@
-I"¥<h1 id="wip">WIP!</h1>
+I"t)<h1 id="wip">WIP!</h1>
 
 <h4 id="introduction">Introduction</h4>
 <p>I just discovered SXMO for the Pinephone yesterday and im amazed by it, its excatly how i imagined myself using the Pinephone and even better. I decided to look deeper into it. First of all there is only a prebuilt image for SXMO using PostmarketOS, which is nice, but i really prefer Arch Linux ARM.</p>
@@ -51,12 +51,39 @@ package<span class="o">()</span> <span class="o">{</span>
 </span><span class="no">	EOF
 </span><span class="o">}</span></code></pre></figure>
 
-<h4 id="building-first-package">building first package</h4>
-<p>NOTE: sxmo isnt yet in Pine64-Arch repository so you need to create the below dir and put the PKGBUILD above inside there.</p>
+<h4 id="building-the-packages">building the packages</h4>
+<p>NOTE: sxmo isnt yet in Pine64-Arch repository so you need to create the below dir and put the PKGBUILD above inside there. for example:</p>
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">git clone https://github.com/dreemurrs-embedded/Pine64-Arch
 <span class="nb">cd </span>Pine64-Arch/PKGBUILDS/sxmo/smxo-st/
 makepkg <span class="nt">-s</span></code></pre></figure>
+
+<h4 id="next-pkgbuild-sxmo-dwm">next PKGBUILD sxmo-dwm</h4>
+<p>same as sxmo-st</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Maintainer: dni &lt;office@dnilabs.com&gt;</span>
+<span class="nv">pkgname</span><span class="o">=</span>sxmo-dwm
+<span class="nv">pkgver</span><span class="o">=</span>6.2.12
+<span class="nv">pkgrel</span><span class="o">=</span>0
+<span class="nv">pkgdesc</span><span class="o">=</span><span class="s2">"Dwm fork for Sxmo UI; supports volume-key hotkeys, swallow, keyboard, among other patches"</span>
+<span class="nb">arch</span><span class="o">=(</span><span class="s1">'x86_64'</span> <span class="s1">'armv7h'</span> <span class="s1">'aarch64'</span><span class="o">)</span>
+<span class="nv">url</span><span class="o">=</span><span class="s2">"https://git.sr.ht/~mil/sxmo-dwm"</span>
+<span class="nv">license</span><span class="o">=(</span><span class="s1">'MIT'</span><span class="o">)</span>
+<span class="nv">depends</span><span class="o">=(</span><span class="s1">'xorg-server'</span><span class="o">)</span>
+<span class="nv">makedepends</span><span class="o">=(</span><span class="s1">'make'</span> <span class="s1">'freetype2'</span> <span class="s1">'libx11'</span> <span class="s1">'libxinerama'</span> <span class="s1">'libxft'</span><span class="o">)</span>
+<span class="nv">provides</span><span class="o">=(</span><span class="s1">'dwm'</span><span class="o">)</span>
+<span class="nb">source</span><span class="o">=(</span><span class="s2">"</span><span class="nv">$pkgname</span><span class="s2">-</span><span class="nv">$pkgver</span><span class="s2">.tar.gz::https://git.sr.ht/~mil/sxmo-dwm/archive/</span><span class="nv">$pkgver</span><span class="s2">.tar.gz"</span><span class="o">)</span>
+<span class="nv">sha512sums</span><span class="o">=(</span><span class="s1">'842d93eb51204059e2f10c78dbf61f0239fef176d768b43a4d0b5f39a5ec452546e9fa77bc580a496f57f5a8f90a5576aa59a8964ffb0f86be2e454aec2b27c5'</span><span class="o">)</span>
+
+build<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">cd</span> <span class="s2">"</span><span class="nv">$pkgname</span><span class="s2">-</span><span class="nv">$pkgver</span><span class="s2">"</span>
+	make <span class="nv">X11INC</span><span class="o">=</span>/usr/include/X11 <span class="nv">X11LIB</span><span class="o">=</span>/usr/lib/X11 <span class="nv">FREETYPEINC</span><span class="o">=</span>/usr/include/freetype2
+<span class="o">}</span>
+
+package<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">cd</span> <span class="s2">"</span><span class="nv">$pkgname</span><span class="s2">-</span><span class="nv">$pkgver</span><span class="s2">"</span>
+	make <span class="nv">PREFIX</span><span class="o">=</span>/usr <span class="nv">DESTDIR</span><span class="o">=</span><span class="s2">"</span><span class="nv">$pkgdir</span><span class="s2">"</span> <span class="nb">install</span>
+<span class="o">}</span></code></pre></figure>
 
 <h1 id="links">Links</h1>
 
