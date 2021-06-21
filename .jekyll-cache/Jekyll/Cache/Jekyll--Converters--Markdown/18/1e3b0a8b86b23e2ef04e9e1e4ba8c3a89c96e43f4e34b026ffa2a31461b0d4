@@ -1,0 +1,32 @@
+I"0<h1 id="wip">WIP!</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>I just discovered SXMO for the Pinephone yesterday and im amazed by it, its excatly how i imagined myself using the Pinephone and even better. I decided to look deeper into it. First of all there is only a prebuilt image for SXMO using PostmarketOS, which is nice, but i really prefer Arch Linux ARM.</p>
+
+<h2 id="first-plan-of-attack">first plan of attack</h2>
+<p>is to get a prebuilt SXMO image into the <a href="https://github.com/dreemurrs-embedded/Pine64-Arch">Danctnix github repository</a>. there is a <a href="https://github.com/justinesmithies/sxmo-alarm">sxmo-alarm</a> with a nice script to install sxmo from the barebones image.</p>
+
+<h1 id="build-dependencies">build dependencies</h1>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>pacman <span class="nt">-S</span> build-essentials fakeroot bc flex bison autoconf</code></pre></figure>
+
+<h1 id="configure">configure</h1>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git clone https://github.com/dreemurrs-embedded/Pine64-Arch
+<span class="nb">cd </span>Pine64-Arch/PKGBUILDS/pine64/linux-pine64/
+vim config
+makepkg <span class="nt">-s</span></code></pre></figure>
+
+<h1 id="links">Links</h1>
+
+<ul>
+  <li><a href="https://github.com/dreemurrs-embedded/Pine64-Arch">Github Repository Arch ARM Danctnix</a></li>
+  <li><a href="https://github.com/dreemurrs-embedded/Pine64-Arch/releases">Arch ARM Danctnix Releases</a></li>
+  <li><a href="https://github.com/dreemurrs-embedded/Pine64-Arch/releases/download/20210613/archlinux-pinephone-barebone-20210613.img.xz">Current Barebones Arch ARM</a></li>
+  <li><a href="https://github.com/dreemurrs-embedded/Pine64-Arch">sxmo repository</a></li>
+  <li><a href="https://github.com/justinesmithies/sxmo-alarm">sxmo-alarm repository</a></li>
+  <li><a href="https://pkgs.alpinelinux.org/packages?name=sxmo*&amp;branch=edge">alpine os sxmo packages</a></li>
+  <li>Matrix: #archmobile:kde.org</li>
+  <li>IRC: #sxmo on irc.oftc.net</li>
+</ul>
+:ET

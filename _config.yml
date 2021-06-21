@@ -17,10 +17,11 @@ title: dni's blog
 email: office@dnilabs.com
 description: >- # this means to ignore newlines until "baseurl:"
   dni's personal blog, about coding, linux, etc.
-  feel free to get in touch,
+  feel free to get in touch.
 
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://blog.dnilabs.com" # the base hostname & protocol for your site, e.g. http://example.com
+website: "https://www.dnilabs.at/"
 twitter_username: dnilabs
 github_username:  dni
 
