@@ -68,6 +68,7 @@ makepkg -s
 
 #### next PKGBUILD sxmo-dwm
 same as sxmo-st
+
 {% highlight bash %}
 # Maintainer: dni <office@dnilabs.com>
 pkgname=sxmo-dwm
