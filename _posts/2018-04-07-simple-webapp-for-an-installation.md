@@ -4,6 +4,8 @@ title:  "creating qr codes and simple a website for an interactive art installat
 date:   2018-04-07 15:56:43 +0200
 categories: web html art
 ---
+# obsolete :) doesnt work anymore
+
 A friend of mine, Patrick Fürli, is artists, he creates so called collage art, he takes pieces of magazine or paper, and rearranges them. He recently started creating animated gif files of his art and then he asked me: "do you have any good idea how to play this gifs with music in an interactive art installation which i can afford?". He had some kind of big installation in mind with multiple monitors, speakers, raspberry pies and other stuff.
 
 1 or 2 days later i saw a qr code and this idea hit me. what about just generating qr code which you can place next to the original pieces. people at the vernisage could then scan it with their smartphones, which takes you directly to a website where the animated gif and a looping mp3 starts. i told him the idea and he likes it.

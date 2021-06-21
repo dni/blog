@@ -1,0 +1,4 @@
+I"<h1 id="build-dependencies">build dependencies</h1>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>pacman <span class="nt">-S</span> build-essentials fakeroot bc flex bison autoconf</code></pre></figure>
+:ET

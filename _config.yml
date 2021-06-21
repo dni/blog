@@ -25,7 +25,6 @@ twitter_username: dnilabs
 github_username:  dni
 
 # Build settings
-markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
