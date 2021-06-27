@@ -8,17 +8,21 @@ title:  "a sxmo inspired rethinking of my dotfiles and also a proof of concept f
 #### Introduction
 After sieving through the sxmo-utils, i started thinking about the structure of sxmo and how the scripts are executed and loaded, which lead me into a journey of rethinking my own dotfiles, i'll talk about that in detail in this blogpost. i've rewritten the filepaths and -names to fit in the context of sxmo.
 
-## abstract
 why? to simplify customizing, unclutter the code with unnecessary calls and configs, more reusability and the ease of just being able to  overwrite any function by just putting it in ~/.functions or maybe even a .sxmorc?
 
 also to make sxmo-utils readable, configurable and make packaging easier. because of things like the `.profile` the package installer would only need to cp the sxmo files and only 1 /etc/profile.d/sxmo.sh. that would be all the setup necessary.
 
 everything is a function! :D
 
+___
+
+
 ## content
 * part i: profile
 * part ii: magic run_function
 * part iii: conclusion, the why and PROs/CONs
+
+___
 
 
 ## PART I: /etc/profiles.d/ and the .profile
@@ -29,6 +33,10 @@ to have systemwide access to the functions i decided to go for /etc/profile.d/. 
 #!/usr/bin/env sh
 . /usr/share/sxmo/.profile
 ```
+
+___
+
+
 ## PART II: magic run_function
 ### so our functions are sourced via .profile everything should just work, right? no!
 a problem i immediatly encountered is that the .profile isnt sourced in a non-interactive shell.
@@ -39,12 +47,14 @@ to illustrate this point better and also for debugging i introduced the [hello](
 ```sh
 -> % which hello
 hello () {
-        echo "hello world! you are running a"
-        case $- in
-                (*i*) echo "interactive" ;;
-                (*) echo "non-interactive" ;;
-        esac
-        tty | grep -q "tty" && echo "tty / (?)login shell" || echo "non-login shell"
+  echo "hello world! you are running a"
+  case $- in
+    (*i*) echo "interactive" ;;
+    (*) echo "non-interactive" ;;
+  esac
+  tty | grep -q "tty" \
+    && echo "tty / (?)login shell" \
+    || echo "non-login shell"
 }
 
 -> % hello
@@ -111,6 +121,9 @@ non-interactive
 non-login shell
 ```
 
+___
+
+
 ## PART III: Conclusion, the why and PROs/CONs
 ### Now? everything is fine? right?
 Very probably, i still have some concerns i need to evaluate and im hoping for a feedback from the sxmo people.
@@ -129,7 +142,12 @@ Glad you asked :D
 * accessing scripts/functions through .profile interactivly, and non-interactivly through $PATH=sxmo/bin and also in a login shell
 this helps a lot with building package the make file doesnt need to take care anymore of putting the sxmo script into /usr/bin directory because the are just run via the magic run_function
 
+___
+
+
 ## proof of concept and dotfiles reworking done, what's next?
+
+___
 
 
 # Links
