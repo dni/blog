@@ -1,0 +1,101 @@
+I"�<h1 id="wip">WIP!</h1>
+
+<h4 id="introduction">Introduction</h4>
+<p>After sieving through the sxmo-utils, i started thinking about the structure of sxmo and how the scripts are executed and loaded, which lead me into a journey of rethinking my own dotfiles, i’ll talk about that in detail in this blogpost. i’ve rewritten the filepaths and -names to fit in the context of sxmo.</p>
+
+<h2 id="abstract">abstract</h2>
+<p>why? customizing, uncluttering, reusability and easily overwrite functions in you own configs</p>
+
+<h2 id="etcprofilesd-and-the-profile">/etc/profiles.d/ and the .profile</h2>
+<p>to have systemwide access to the functions i decided to go for /etc/profile.d/. when you put a script in there it gets source on login, but only once, so if you change anything there you have to relogin.</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; % <span class="nb">cat</span> /etc/profile.d/sxmo.sh
+<span class="c">#!/usr/bin/env sh</span>
+<span class="nb">.</span> /usr/share/sxmo/.profile
+</code></pre></div></div>
+<h2 id="so-our-functions-are-sourced-via-profile-everything-should-just-work-right-no">so our functions are sourced via .profile everything should just work, right? no!</h2>
+<p>a problem i immediatly encountered is that the .profile isnt sourced in a non-interactive shell.
+which means, running following commands won’t work without sourcing the profile again, as seen below.
+also programs like dmenu, sxkhdm, xinit and so on, can’t run those functions nicely without sourcing the .profile.
+to illustrate this point better and also for debugging i introduced the <a href="">hello</a> function.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; % which hello
+hello <span class="o">()</span> <span class="o">{</span>
+        <span class="nb">echo</span> <span class="s2">"hello world! you are running a"</span>
+        <span class="k">case</span> <span class="nv">$-</span> <span class="k">in</span>
+                <span class="o">(</span><span class="k">*</span>i<span class="k">*</span><span class="p">)</span> <span class="nb">echo</span> <span class="s2">"interactive"</span> <span class="p">;;</span>
+                <span class="o">(</span><span class="k">*</span><span class="p">)</span> <span class="nb">echo</span> <span class="s2">"non-interactive"</span> <span class="p">;;</span>
+        <span class="k">esac</span>
+        <span class="nb">tty</span> | <span class="nb">grep</span> <span class="nt">-q</span> <span class="s2">"tty"</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">"tty / (?)login shell"</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">"non-login shell"</span>
+<span class="o">}</span>
+
+-&gt; % hello
+hello world! you are running a
+interactive
+non-login shell
+
+-&gt; % sh <span class="nt">-c</span> hello
+sh: row 1: hello: <span class="nb">command </span>not found
+
+-&gt; % sh <span class="nt">-c</span> <span class="s2">". </span><span class="nv">$DOTFILES</span><span class="s2">/.functions; hello"</span>
+hello world! you are running a
+non-interactive
+non-login shell
+
+-&gt; % sh <span class="nt">-ic</span> <span class="s2">"hello"</span>
+hello world! you are running a
+interactive
+non-login shell
+</code></pre></div></div>
+<p>as you see in the example above <code class="language-plaintext highlighter-rouge">sh -c hello</code> throws a command not found error, because it is a non-interactive shell.
+the command only works when you source the <code class="language-plaintext highlighter-rouge">.functions</code> again before running the command <code class="language-plaintext highlighter-rouge">sh -c ". $DOTFILES/.functions; hello"</code>.
+similar <code class="language-plaintext highlighter-rouge">sh -ic hello</code> runs as expected because -i forces interactive shell. this is a problem because in some cases like .xinitrc, dmenu, sxhkd and probably many more, it is not clean to force an interactive shell or source our <code class="language-plaintext highlighter-rouge">.functions</code> again in each of these cases, so our function will fail.</p>
+
+<p>i dont like sourcing files over and over again, so i came up with, what i think is, a rather clever solution.
+first of all i created a bin directory in /usr/share/sxmo which i put into the $PATH in <code class="language-plaintext highlighter-rouge">.profile</code> so binaries there are found.
+binaries can be executed also in a non-interactive context and with this magical
+<a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/run_function">run_function</a> script and symlinks to it, it is
+possible to simply run any of our defined functions in a non-interactive way and sourcing is done inside the run_function.</p>
+
+<p>now after running <a href="">create_binaries</a> function the symlinks in our bin directory are regenerated and after sourcing our non working command now runs just fine.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; % sh <span class="nt">-c</span> hello
+hello world! you are running a
+non-interactive
+non-login shell
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env sh</span>
+
+<span class="c"># this file is useful for running functions in a non-interactive shell</span>
+<span class="c"># (dmenu, xinit, sxhkd). so we need to source our functions here and</span>
+<span class="c"># run them, else we end in an infinite loop. functions are not sourced</span>
+<span class="c"># in a non-interactive shell so we create symlinks to this script</span>
+<span class="c"># in the $PATH and source the profile.</span>
+
+<span class="c"># TODO: not sure if this also works yet need to investigate more</span>
+<span class="c"># run interactive shell, so .profile is sourced already</span>
+<span class="c"># sh -ic "${0##*/}"</span>
+
+<span class="c"># source .profile with functions and eval</span>
+<span class="c"># symlinked binaries in the $PATH are overwritten by the function calls</span>
+<span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/.profile
+<span class="nb">eval</span> <span class="s2">"</span><span class="k">${</span><span class="nv">0</span><span class="p">##*/</span><span class="k">}</span><span class="s2">"</span>
+</code></pre></div></div>
+<p>the symlinks are regenerated by calling the function <a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/utils.sh#L18">create_binaries</a></p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># populate ./bin/ with symlink to the magic run_function script</span>
+create_binaries<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">rm</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/bin/<span class="k">*</span>
+  get_functions | <span class="k">while </span><span class="nb">read</span> <span class="nt">-r</span> x<span class="p">;</span> <span class="k">do
+    </span><span class="nb">ln</span> <span class="nt">-sf</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/scripts/run_function <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/bin/<span class="s2">"</span><span class="nv">$x</span><span class="s2">"</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="links">Links</h1>
+
+<ul>
+  <li><a href="https://github.com/dni/dotfiles/tree/sxmo">dotfiles</a></li>
+  <li><a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/run_function">run_function</a></li>
+  <li>IRC: #sxmo on irc.oftc.net</li>
+</ul>
+:ET

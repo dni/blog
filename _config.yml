@@ -16,7 +16,7 @@
 title: dni's blog
 email: office@dnilabs.com
 description: >- # this means to ignore newlines until "baseurl:"
-  dni's personal blog, about coding, linux, etc.
+  dni's personal blog about linux, scripting and bitcoin
   feel free to get in touch.
 
 baseurl: "" # the subpath of your site, e.g. /blog

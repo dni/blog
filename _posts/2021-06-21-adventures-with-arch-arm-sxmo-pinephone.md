@@ -2,12 +2,11 @@
 layout: post
 title:  "adventures with arch linux arm and sxmo on the pinephone"
 ---
-# WIP!
 
 #### Introduction
 I just discovered SXMO for the Pinephone yesterday and im amazed by it, its excatly how i imagined myself using the Pinephone and even better. I decided to look deeper into it. First of all there is only a prebuilt image for SXMO using PostmarketOS, which is nice, but i really prefer Arch Linux ARM.
 
-#### first plan of attack
+### first plan of attack
 is to get a prebuilt SXMO image into the [Danctnix github repository](https://github.com/dreemurrs-embedded/Pine64-Arch). there is a [sxmo-alarm](https://github.com/justinesmithies/sxmo-alarm) with a nice script to install sxmo from the barebones image, but im not really satisfied with this.
 
 ## creating the sxmo PKGBUILDs for Arch ARM
@@ -94,6 +93,10 @@ package() {
 	make PREFIX=/usr DESTDIR="$pkgdir" install
 }
 {% endhighlight %}
+
+
+# PKGBUILDs done, whats next?
+After sieving through the sxmo-utils, i started thinking about the structure of sxmo and how the scripts are executed and loaded, which lead me into a journey of rethinking my own dotfiles, i'll talk about that in detail in my next blogpost.
 
 
 

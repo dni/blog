@@ -1,9 +1,7 @@
-I"t)<h1 id="wip">WIP!</h1>
-
-<h4 id="introduction">Introduction</h4>
+I"œ*<h4 id="introduction">Introduction</h4>
 <p>I just discovered SXMO for the Pinephone yesterday and im amazed by it, its excatly how i imagined myself using the Pinephone and even better. I decided to look deeper into it. First of all there is only a prebuilt image for SXMO using PostmarketOS, which is nice, but i really prefer Arch Linux ARM.</p>
 
-<h4 id="first-plan-of-attack">first plan of attack</h4>
+<h3 id="first-plan-of-attack">first plan of attack</h3>
 <p>is to get a prebuilt SXMO image into the <a href="https://github.com/dreemurrs-embedded/Pine64-Arch">Danctnix github repository</a>. there is a <a href="https://github.com/justinesmithies/sxmo-alarm">sxmo-alarm</a> with a nice script to install sxmo from the barebones image, but im not really satisfied with this.</p>
 
 <h2 id="creating-the-sxmo-pkgbuilds-for-arch-arm">creating the sxmo PKGBUILDs for Arch ARM</h2>
@@ -84,6 +82,9 @@ package<span class="o">()</span> <span class="o">{</span>
   <span class="nb">cd</span> <span class="s2">"</span><span class="nv">$pkgname</span><span class="s2">-</span><span class="nv">$pkgver</span><span class="s2">"</span>
 	make <span class="nv">PREFIX</span><span class="o">=</span>/usr <span class="nv">DESTDIR</span><span class="o">=</span><span class="s2">"</span><span class="nv">$pkgdir</span><span class="s2">"</span> <span class="nb">install</span>
 <span class="o">}</span></code></pre></figure>
+
+<h1 id="pkgbuilds-done-whats-next">PKGBUILDs done, whats next?</h1>
+<p>After sieving through the sxmo-utils, i started thinking about the structure of sxmo and how the scripts are executed and loaded, which lead me into a journey of rethinking my own dotfiles, iâ€™ll talk about that in detail in my next blogpost.</p>
 
 <h1 id="links">Links</h1>
 
