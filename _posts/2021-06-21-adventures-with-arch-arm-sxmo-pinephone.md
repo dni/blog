@@ -96,7 +96,7 @@ package() {
 
 
 # PKGBUILDs done, whats next?
-After sieving through the sxmo-utils, i started thinking about the structure of sxmo and how the scripts are executed and loaded, which lead me into a journey of rethinking my own dotfiles, i'll talk about that in detail in my next blogpost.
+After sieving through the sxmo-utils, i started thinking about the structure of sxmo and how the scripts are executed and loaded, which lead me into a journey of rethinking my own dotfiles, i'll talk about that in detail in my [next blogpost](http://blog.dnilabs.com/2021/06/27/restructuring-dotfiles-rethinking-sxmo-structure.html).
 
 
 
@@ -111,5 +111,7 @@ After sieving through the sxmo-utils, i started thinking about the structure of 
 * [APKBUILD reference](https://wiki.alpinelinux.org/wiki/APKBUILD_Reference)
 * [PKGBUILD reference](https://wiki.archlinux.org/title/PKGBUILD)
 * [Creating Packages Arch](https://wiki.archlinux.org/title/Creating_packages)
+* [next blogpost](http://blog.dnilabs.com/2021/06/27/restructuring-dotfiles-rethinking-sxmo-structure.html).
+
 * Matrix: #archmobile:kde.org
 * IRC: #sxmo on irc.oftc.net
