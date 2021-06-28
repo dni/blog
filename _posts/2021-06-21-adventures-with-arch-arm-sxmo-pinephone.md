@@ -111,6 +111,6 @@ After sieving through the sxmo-utils, i started thinking about the structure of 
 * [APKBUILD reference](https://wiki.alpinelinux.org/wiki/APKBUILD_Reference)
 * [PKGBUILD reference](https://wiki.archlinux.org/title/PKGBUILD)
 * [Creating Packages Arch](https://wiki.archlinux.org/title/Creating_packages)
-* [next blogpost](http://blog.dnilabs.com/2021/06/27/restructuring-dotfiles-rethinking-sxmo-structure.html).
+* [next blogpost](http://blog.dnilabs.com/2021/06/27/restructuring-dotfiles-rethinking-sxmo-structure.html)
 * Matrix: #archmobile:kde.org
 * IRC: #sxmo on irc.oftc.net
