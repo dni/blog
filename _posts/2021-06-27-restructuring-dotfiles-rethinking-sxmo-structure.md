@@ -27,7 +27,7 @@ ___
 
 ## **PART I:** /etc/profiles.d/ and the .profile
 ### the one place the configure everything
-to have systemwide access to the functions i decided to go for /etc/profile.d/. when you put a script in there it gets source on login, but only once, so if you change anything there you have to relogin.
+to have systemwide access to the functions i decided to go for /etc/profile.d/. when you put a script in there it gets sourced on login, but only once, so if you change anything there you have to relogin.
 ```sh
 -> % cat /etc/profile.d/sxmo.sh
 #!/usr/bin/env sh
