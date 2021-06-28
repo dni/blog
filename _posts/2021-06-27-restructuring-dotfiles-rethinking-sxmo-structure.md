@@ -33,6 +33,36 @@ to have systemwide access to the functions i decided to go for /etc/profile.d/. 
 #!/usr/bin/env sh
 . /usr/share/sxmo/.profile
 ```
+the .profile consists of 3 files and are sourced from the sxmo dir and also from the home dir if they exist
+```sh
+-> % cat dotfiles/.profile
+#!/usr/bin/env sh
+# .env should hold enviroment variable
+# .functions should hold functions
+# .alias should hold aliases
+# also we source potential user configuration, so overwriting is possible
+while read -r x; do
+  . "$DOTFILES"/"$x"
+  [ -e "$HOME"/"$x" ] && . "$HOME"/"$x"
+done <<EOF
+.env
+.aliases
+.functions
+EOF
+```
+in the `.functions` file furthers functions are loaded
+```sh
+#!/usr/bin/env sh
+. "$DOTFILES"/scripts/audio.sh
+. "$DOTFILES"/scripts/devtools/typo3.sh
+. "$DOTFILES"/scripts/devtools/magento2.sh
+. "$DOTFILES"/scripts/devtools/webserver.sh
+. "$DOTFILES"/scripts/devtools/mysql.sh
+. "$DOTFILES"/scripts/dmenu.sh
+. "$DOTFILES"/scripts/status.sh
+. "$DOTFILES"/scripts/utils.sh
+```
+one very nice aspect of this is it is possible to group together functions into 1 file in a sensical way, for example [audio.sh](https://github.com/dni/dotfiles/blob/sxmo/scripts/audio.sh). which makes it for easier to understand and also less code. a did a small example what that could mean for sxmo, as seen here [sxmo_audio.sh]():
 
 ___
 
@@ -79,7 +109,7 @@ as you see in the example above `sh -c hello` throws a command not found error, 
 the command only works when you source the `.functions` again before running the command `sh -c ". $DOTFILES/.functions; hello"`.
 similar `sh -ic hello` runs as expected because -i forces interactive shell. this is a problem because in some cases like .xinitrc, dmenu, sxhkd and probably many more, it is not clean to force an interactive shell or source our `.functions` again in each of these cases, so our function will fail.
 
-i dont like sourcing files over and over again, so i came up with, what i think is, a rather clever solution.
+i do not like sourcing files over and over again, so i came up with, what i think is, a rather clever solution.
 first of all i created a bin directory in /usr/share/sxmo which i put into the $PATH in `.profile` so binaries there are found.
 binaries can be executed also in a non-interactive context and with this magical
 [run_function](https://github.com/dni/dotfiles/blob/sxmo/scripts/run_function) script and symlinks to it, it is
@@ -138,14 +168,26 @@ run everything with shell scripts so there is a very good reason to also be able
 
 ## But WHY? why is this even relevant, what are the benefits of it?
 Glad you asked :D
-* now every smxo script could just be a shell function
-* accessing scripts/functions through .profile interactivly, and non-interactivly through $PATH=sxmo/bin and also in a login shell
-this helps a lot with building package the make file doesnt need to take care anymore of putting the sxmo script into /usr/bin directory because the are just run via the magic run_function
+
+### less stuff the package installer has to do and a cleaner configuration
+sourcing .env, .aliases and .functions through .profile interactivly and in a non-login/login shell, and non-interactivly through $PATH=sxmo/bin,
+helps a lot with packaging because the make file doesnt need to take care anymore of putting the sxmoscripts into /usr/bin directory because the are just linked via the $PATH variable and then run with symlinks via the magic run_function. Also only 1 file, `.profile` is needed for bootstrapping.
+
+### overwriting of functions, now every smxo script could just be a function
+this is very useful for multiple reasons. the first and most important reason is, that user now can easily overwrite any function from the sxmo utils without a hassle you would just have to put it in `~/.functions` and it gets sourced and overwrites core function on the fly.
+
+also with this approach if we would do something like a sxmo-extra package with nice to have but not essential tools we could also just overwrite those functions easily in between the user config. so its possible to extend functionality for different functions in a meta package, could be very useful for something like the [sxmo_urlhandler](https://github.com/proycon/sxmo-utils/blob/master/scripts/core/sxmo_urlhandler.sh#L35) and youtube-dl in there, which i see as a non essential-tool and i would put it into sxmo-extra.
+
+### cleaner and simpler code
+for me this is a big plus too, because we now can run every of our scripts just by a function call, all of our scripts now do not need the first lines and last lines anymore. what to i mean by that? take a look here, there is no need for sourcing anything anymore. also tak a look here, there is no need for actually calling the function like this anymore.
 
 ___
 
 
 ## proof of concept and dotfiles reworking done, what's next?
+First of all i created a new ticket on the sxmo-tickets page, please leave a feedback there if you have time. I want to wait for feedback and how this idea and structure is received, before i move on trying the port this to the sxmo-utils repository.
+
+In the meantime im still working on simplifying the sxmo-utils package itself, and i think my next blogpost going to be a deep dive into the packaging of sxmo-utils and also how we could split them up in multiple packages to make it easier to understand, more readable and better structured.
 
 ___
 
