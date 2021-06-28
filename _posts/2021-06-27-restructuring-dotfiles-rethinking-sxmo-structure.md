@@ -213,8 +213,9 @@ ___
 
 ### proof of concept and dotfiles reworking done
 ## **what's next?**
-First of all i created a new ticket on the sxmo-tickets page, please leave a feedback there if you have time.
-I want to wait for feedback and how this idea and structure is received, before i move on trying the port this to the sxmo-utils repository.
+First of all i created a new [ticket](https://todo.sr.ht/~mil/sxmo-tickets/297) on the sxmo-tickets page,
+please leave a feedback there if you have time.  I want to wait for feedback and how this idea and structure
+is received, before i move on trying the port this to the sxmo-utils repository.
 
 In the meantime im still working on simplifying the sxmo-utils package itself, and i think my next blogpost going to be a deep dive into the
 packaging of sxmo-utils and also how we could split them up in multiple packages to make it easier to understand, more readable and better structured.
@@ -224,6 +225,7 @@ ___
 
 # Links
 
+* [ticket](https://todo.sr.ht/~mil/sxmo-tickets/297)
 * [dotfiles](https://github.com/dni/dotfiles/tree/sxmo)
 * [run_function](https://github.com/dni/dotfiles/blob/sxmo/scripts/run_function)
 * [hello](https://github.com/dni/dotfiles/blob/sxmo/scripts/utils.sh#L4) function
