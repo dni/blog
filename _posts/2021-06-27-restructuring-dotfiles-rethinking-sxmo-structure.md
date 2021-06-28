@@ -10,7 +10,7 @@ why? to simplify customizing, unclutter the code with unnecessary calls and conf
 
 also to make sxmo-utils readable, configurable and make packaging easier.
 
-everything is should be a function! :D
+everything should be a function! :D
 
 ___
 
