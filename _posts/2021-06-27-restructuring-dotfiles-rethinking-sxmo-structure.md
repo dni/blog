@@ -218,7 +218,7 @@ please leave a feedback there if you have time.  I want to wait for feedback and
 is received, before i move on trying the port this to the sxmo-utils repository.
 
 In the meantime im still working on simplifying the sxmo-utils package itself, and i think my next blogpost going to be a deep dive into the
-packaging of sxmo-utils and also how we could split them up in multiple packages to make it easier to understand, more readable and better structured.
+packaging of sxmo-utils and also how we could split them up in multiple packages to make it easier to understand, more readable and better structured. my [last blogpost](http://blog.dnilabs.com/2021/06/21/adventures-with-arch-arm-sxmo-pinephone.html) also talks about that.
 
 ___
 
@@ -230,4 +230,5 @@ ___
 * [run_function](https://github.com/dni/dotfiles/blob/sxmo/scripts/run_function)
 * [hello](https://github.com/dni/dotfiles/blob/sxmo/scripts/utils.sh#L4) function
 * [sxmo_audio.sh](https://github.com/dni/dotfiles/blob/sxmo/scripts/sxmo_audio.sh).
+* [arch-sxmo blogpost](http://blog.dnilabs.com/2021/06/21/adventures-with-arch-arm-sxmo-pinephone.html)
 * IRC: #sxmo on irc.oftc.net
