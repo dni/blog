@@ -1,0 +1,206 @@
+I"�F<h4 id="introduction">Introduction</h4>
+<p>After sieving through the sxmo-utils, i started thinking about the structure of sxmo and how the scripts are executed and loaded, which lead me into a journey of rethinking my own dotfiles, i’ll talk about that in detail in this blogpost. i’ve rewritten the filepaths and -names to fit in the context of sxmo.</p>
+
+<p>why? to simplify customizing, unclutter the code with unnecessary calls and configs, more reusability and the ease of just being able to overwrite any function by just putting it in <code class="language-plaintext highlighter-rouge">~/.functions</code> or maybe even a <code class="language-plaintext highlighter-rouge">.sxmorc</code>?</p>
+
+<p>also to make sxmo-utils readable, configurable and make packaging easier.</p>
+
+<p>everything is should be a function! :D</p>
+
+<hr />
+
+<h2 id="content">content</h2>
+<ul>
+  <li>part i: profile</li>
+  <li>part ii: the magic run_function</li>
+  <li>part iii: conclusion, the why and PROs/CONs</li>
+</ul>
+
+<hr />
+
+<h2 id="part-i-etcprofilesd-and-the-profile">PART I: /etc/profiles.d/ and the .profile</h2>
+<h3 id="the-one-place-the-configure-everything">the one place the configure everything</h3>
+<p>to have systemwide access to the functions i decided to go for /etc/profile.d/. when you put a script in there it gets source on login, but only once, so if you change anything there you have to relogin.</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; % <span class="nb">cat</span> /etc/profile.d/sxmo.sh
+<span class="c">#!/usr/bin/env sh</span>
+<span class="nb">.</span> /usr/share/sxmo/.profile
+</code></pre></div></div>
+<p>the .profile consists of 3 files and are sourced from the sxmo dir and also from the home dir if they exist</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; % <span class="nb">cat </span>dotfiles/.profile
+<span class="c">#!/usr/bin/env sh</span>
+<span class="c"># .env should hold enviroment variable</span>
+<span class="c"># .functions should hold functions</span>
+<span class="c"># .alias should hold aliases</span>
+<span class="c"># also we source potential user configuration, so overwriting is possible</span>
+<span class="k">while </span><span class="nb">read</span> <span class="nt">-r</span> x<span class="p">;</span> <span class="k">do</span>
+  <span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/<span class="s2">"</span><span class="nv">$x</span><span class="s2">"</span>
+  <span class="o">[</span> <span class="nt">-e</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">"</span>/<span class="s2">"</span><span class="nv">$x</span><span class="s2">"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">.</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">"</span>/<span class="s2">"</span><span class="nv">$x</span><span class="s2">"</span>
+<span class="k">done</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh">
+.env
+.aliases
+.functions
+</span><span class="no">EOF
+</span></code></pre></div></div>
+<p>in the <code class="language-plaintext highlighter-rouge">.functions</code> file furthers functions are loaded</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env sh</span>
+<span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/scripts/audio.sh
+<span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/scripts/devtools/typo3.sh
+<span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/scripts/devtools/magento2.sh
+<span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/scripts/devtools/webserver.sh
+<span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/scripts/devtools/mysql.sh
+<span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/scripts/dmenu.sh
+<span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/scripts/status.sh
+<span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/scripts/utils.sh
+</code></pre></div></div>
+<p>one very nice aspect of this is it is possible to group together functions into 1 file in a sensical way,
+which makes it for easier to understand and also less code. for example
+<a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/audio.sh">audio.sh</a> which is used in sxhkd config:
+<a href="https://github.com/dni/dotfiles/blob/sxmo/.config/sxhkd/sxhkdrc#L11">sxhkdrc</a>.</p>
+
+<p>I did a small example what that could mean for sxmo, as seen here <a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/sxmo_audio.sh">sxmo_audio.sh</a>.
+NOTE: also i put the <code class="language-plaintext highlighter-rouge">audiostatus()</code> also in this file, this was originally inside sxmo_status.sh <a href="https://git.sr.ht/~mil/sxmo-utils/tree/master/item/scripts/core/sxmo_statusbar.sh#L102">here</a> and could be just replace with audiostatus there. Now all audio things are neatly tied together into 1 file and can be overwritten anywhere.
+Now all of the following files would merge into 1 file:</p>
+<ul>
+  <li><a href="https://git.sr.ht/~mil/sxmo-utils/tree/master/item/scripts/core/sxmo_audiocurrentdevice.sh">sxmo_audiocurrentdevice.sh</a></li>
+  <li><a href="https://git.sr.ht/~mil/sxmo-utils/tree/master/item/scripts/core/sxmo_audioout.sh">sxmo_audioout.sh</a></li>
+  <li><a href="https://git.sr.ht/~mil/sxmo-utils/tree/master/item/scripts/core/sxmo_vol.sh">sxmo_vol.sh</a></li>
+</ul>
+
+<p>also note that we dont need to <code class="language-plaintext highlighter-rouge">. "$(dirname "$0")/sxmo_common.sh"</code> <a href="https://git.sr.ht/~mil/sxmo-utils/tree/master/item/scripts/core/sxmo_vol.sh#L5">here</a>
+anymore and also no need to call the function in the and like <code class="language-plaintext highlighter-rouge">"$@"</code> <a href="https://git.sr.ht/~mil/sxmo-utils/tree/master/item/scripts/core/sxmo_vol.sh#L41">here</a></p>
+
+<hr />
+
+<h2 id="part-ii-the-magic-run_function">PART II: the magic run_function</h2>
+<h3 id="so-our-functions-are-sourced-via-profile-everything-should-just-work-right-no">so our functions are sourced via .profile everything should just work, right? no!</h3>
+<p>a problem i immediatly encountered is that the <code class="language-plaintext highlighter-rouge">.profile</code> isnt sourced in a non-interactive shell.
+which means, running following commands won’t work without sourcing the profile again.
+to illustrate this point better and also for debugging i introduced the
+<a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/utils.sh#L4">hello</a> function.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; % which hello
+hello <span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">"hello world! you are running a"</span>
+  <span class="k">case</span> <span class="nv">$-</span> <span class="k">in</span>
+    <span class="o">(</span><span class="k">*</span>i<span class="k">*</span><span class="p">)</span> <span class="nb">echo</span> <span class="s2">"interactive"</span> <span class="p">;;</span>
+    <span class="o">(</span><span class="k">*</span><span class="p">)</span> <span class="nb">echo</span> <span class="s2">"non-interactive"</span> <span class="p">;;</span>
+  <span class="k">esac</span>
+  <span class="nb">tty</span> | <span class="nb">grep</span> <span class="nt">-q</span> <span class="s2">"tty"</span> <span class="se">\</span>
+    <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">"tty / (?)login shell"</span> <span class="se">\</span>
+    <span class="o">||</span> <span class="nb">echo</span> <span class="s2">"non-login shell"</span>
+<span class="o">}</span>
+
+-&gt; % hello
+hello world! you are running a
+interactive
+non-login shell
+
+-&gt; % sh <span class="nt">-c</span> hello
+sh: row 1: hello: <span class="nb">command </span>not found
+
+-&gt; % sh <span class="nt">-c</span> <span class="s2">". </span><span class="nv">$DOTFILES</span><span class="s2">/.functions; hello"</span>
+hello world! you are running a
+non-interactive
+non-login shell
+
+-&gt; % sh <span class="nt">-ic</span> <span class="s2">"hello"</span>
+hello world! you are running a
+interactive
+non-login shell
+</code></pre></div></div>
+<p>as you see in the example above <code class="language-plaintext highlighter-rouge">sh -c hello</code> throws a command not found error, because it is a non-interactive shell.
+the command only works when you source the <code class="language-plaintext highlighter-rouge">.functions</code> again before running the command <code class="language-plaintext highlighter-rouge">sh -c ". $DOTFILES/.functions; hello"</code>.
+similar <code class="language-plaintext highlighter-rouge">sh -ic hello</code> runs as expected because -i forces interactive shell.  this is a problem because in some cases like
+.xinitrc, dmenu, sxhkd and probably many more, it is not clean to force an interactive shell or source our <code class="language-plaintext highlighter-rouge">.functions</code>
+again in each of these cases, so our function will fail in this context.</p>
+
+<p>i do not like sourcing files over and over again, so i came up with, what i think is, a rather clever solution.
+first of all i created a bin directory in /usr/share/sxmo which i put into the $PATH in <code class="language-plaintext highlighter-rouge">.profile</code> so binaries there are found.
+binaries can be executed also in a non-interactive context and with this magical
+<a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/run_function">run_function</a> script and symlinks to it, it is
+possible to simply run any of our defined functions in a non-interactive way and sourcing is done inside the run_function.</p>
+
+<h4 id="run_function"><a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/run_function">run_function</a></h4>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env sh</span>
+
+<span class="c"># this file is useful for running functions in a non-interactive shell</span>
+<span class="c"># (dmenu, xinit, sxhkd). so we need to source our functions here and</span>
+<span class="c"># run them, else we end in an infinite loop. functions are not sourced</span>
+<span class="c"># in a non-interactive shell so we create symlinks to this script</span>
+<span class="c"># in the $PATH and source the profile.</span>
+
+<span class="c"># source .profile with functions and eval</span>
+<span class="c"># symlinked binaries in the $PATH are overwritten by the function calls</span>
+<span class="nb">.</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/.profile
+<span class="nb">eval</span> <span class="s2">"</span><span class="k">${</span><span class="nv">0</span><span class="p">##*/</span><span class="k">}</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h4 id="create_binaries"><a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/utils.sh#L18">create_binaries</a></h4>
+<p>the symlinks are regenerated by calling the function</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># populate ./bin/ with symlink to the magic run_function script</span>
+create_binaries<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">rm</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/bin/<span class="k">*</span>
+  get_functions | <span class="k">while </span><span class="nb">read</span> <span class="nt">-r</span> x<span class="p">;</span> <span class="k">do
+    </span><span class="nb">ln</span> <span class="nt">-sf</span> <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/scripts/run_function <span class="s2">"</span><span class="nv">$DOTFILES</span><span class="s2">"</span>/bin/<span class="s2">"</span><span class="nv">$x</span><span class="s2">"</span>
+  <span class="k">done</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>now after running <code class="language-plaintext highlighter-rouge">create_binaries</code> function and sourcing, our non working command now runs just fine everywhere, everytime, hopefully :).</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt; % sh <span class="nt">-c</span> hello
+hello world! you are running a
+non-interactive
+non-login shell
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="part-iii-conclusion-the-why-and-proscons">PART III: Conclusion, the why and PROs/CONs</h2>
+<h3 id="now-everything-is-fine-right">Now? everything is fine? right?</h3>
+<p>Well, very probably, i still have some concerns i need to evaluate and im hoping for a feedback from the sxmo people.</p>
+
+<p>Obviously, there is a reason for a non-interactive and an interactive enviroment and why the <code class="language-plaintext highlighter-rouge">.profile</code> is not
+sourced in a non-interactive enviroment. That is, to have a clean enviroment when running in a non-interactive shell
+and to not run the risk to somehow break the clean non-interactive enviroment with our .profile. still it is unclear to
+me what the risk really is someone would need to assess it, probably, my gut feeling is even when it goes wrong it is not that bad.</p>
+
+<p>that said i still think the PROs heavily outweights the CONs. Especially because the whole concept of sxmo is to
+run everything with shell scripts so there is a very good reason to also be able to run functions in a non-interactive way.</p>
+
+<h2 id="but-why-why-is-this-even-relevant-what-are-the-benefits-of-it">But WHY? why is this even relevant, what are the benefits of it?</h2>
+<p>Glad you asked :D</p>
+
+<h3 id="less-stuff-the-package-installer-has-to-do">less stuff the package installer has to do</h3>
+<p>sourcing .env, .aliases and .functions through .profile interactivly and in a non-login/login shell, and non-interactivly through $PATH=sxmo/bin,
+helps a lot with packaging because the make file doesnt need to take care anymore of putting the sxmoscripts into /usr/bin directory because the are just linked via the $PATH variable and then run with symlinks via the magic run_function. Also only 1 file, <code class="language-plaintext highlighter-rouge">.profile</code> in /etc/profile.d/ is needed for bootstrapping.</p>
+
+<h3 id="cleaner-configuration">cleaner configuration</h3>
+<p>there is no need anymore for hooks and default configuration like seen (here)[https://git.sr.ht/~mil/sxmo-utils/tree/master/item/scripts/core/sxmo_xinit.sh#L84] in the sxmo_xinit script. also those (envvars)[https://git.sr.ht/~mil/sxmo-utils/tree/master/item/scripts/core/sxmo_xinit.sh#L4] are just defined in <code class="language-plaintext highlighter-rouge">.env</code>. i think if i dig deeper i will find even more things.</p>
+
+<h3 id="overwriting-of-functions-now-every-smxo-script-could-just-be-a-function">overwriting of functions, now every smxo script could just be a function</h3>
+<p>this is very useful for multiple reasons. the first and most important reason is, that user now can easily overwrite any function from the sxmo utils without a hassle you would just have to put it in <code class="language-plaintext highlighter-rouge">~/.functions</code> and it gets sourced and overwrites core function on the fly.</p>
+
+<p>also with this approach if we would do something like a sxmo-extra package with nice to have but not essential tools we could also just overwrite those functions easily in between the user config. so its possible to extend functionality for different functions in a meta package, could be very useful for something like the <a href="https://github.com/proycon/sxmo-utils/blob/master/scripts/core/sxmo_urlhandler.sh#L35">sxmo_urlhandler</a> and youtube-dl in there, which i see as a non essential-tool and i would put it into sxmo-extra.</p>
+
+<h3 id="cleaner-and-simpler-code">cleaner and simpler code</h3>
+<p>for me this is a big plus too, because we now can run every of our scripts just by a function call. we could logically group our functions into a file and all of our scripts now do not need the first lines, sourcing sxmo_common, and last lines, calling the function, anymore. i already talked about that in PART I and the <a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/sxmo_audio.sh">sxmo_audio.sh</a>.</p>
+
+<hr />
+
+<h2 id="proof-of-concept-and-dotfiles-reworking-done-whats-next">proof of concept and dotfiles reworking done, what’s next?</h2>
+<p>First of all i created a new ticket on the sxmo-tickets page, please leave a feedback there if you have time. I want to wait for feedback and how this idea and structure is received, before i move on trying the port this to the sxmo-utils repository.</p>
+
+<p>In the meantime im still working on simplifying the sxmo-utils package itself, and i think my next blogpost going to be a deep dive into the packaging of sxmo-utils and also how we could split them up in multiple packages to make it easier to understand, more readable and better structured.</p>
+
+<hr />
+
+<h1 id="links">Links</h1>
+
+<ul>
+  <li><a href="https://github.com/dni/dotfiles/tree/sxmo">dotfiles</a></li>
+  <li><a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/run_function">run_function</a></li>
+  <li><a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/utils.sh#L4">hello</a> function</li>
+  <li><a href="https://github.com/dni/dotfiles/blob/sxmo/scripts/sxmo_audio.sh">sxmo_audio.sh</a>.</li>
+  <li>IRC: #sxmo on irc.oftc.net</li>
+</ul>
+:ET
