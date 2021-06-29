@@ -14,7 +14,7 @@ As seen here [sxmo build all](https://git.sr.ht/~mil/sxmo-build/tree/master/item
 
 #### build dependencies
 {% highlight bash %}
-sudo pacman -S build-essentials fakeroot bc flex bison autoconf
+sudo pacman -S binutils pkgconf fakeroot bc flex bison autoconf
 {% endhighlight %}
 
 #### starting off with a simple package sxmo-st
