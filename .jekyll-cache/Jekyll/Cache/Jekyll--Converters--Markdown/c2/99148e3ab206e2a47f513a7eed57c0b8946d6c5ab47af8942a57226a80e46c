@@ -1,0 +1,57 @@
+I"�<h1 id="introduction">introduction</h1>
+
+<p>how easy is it to create your own DEX and earn referal money? not so easy, as we are discovering now.</p>
+
+<h2 id="the-concept">the concept</h2>
+
+<h3 id="the-idea">the idea</h3>
+<p>the idea was to create a server host a GUI for a DEX and earn money by getting people to trade on our dex and earn referals, basically a copy of sites like <a href="https://dex.raydium.io">radium</a> and other projects of that kind, which is called “DEX”</p>
+
+<h3 id="the-execution">the execution</h3>
+<p>after some quick devops work, forking, installing and updating, we quickly discovered a problem with our project of choice <a href="https://github.com/project-serum/serum-dex-ui">Serum Dex Ui Example</a>. despite the documentation not mentioning it a bit, there is a subscription
+for the datafeed you need to display correct chart data with tradingview on your DEX. the price is
+1000€ per month to use their aggregated onchain data. bohoo, big bummer</p>
+
+<h3 id="the-conclusion">the conclusion</h3>
+
+<p>i spent 90% figuring out the complexity and the dependencies of the different services like “serum” und “bonfida” which is a paid subscription only to discover that without the data, you can pretty much only offer a orderbook directly from serum, but the question, will their service also become subscription only in the future? i’m not sure.</p>
+
+<p>all that said, we still learned some valueable lessons and still here is some more stuff i gathered when trying to do this.</p>
+
+<h4 id="hosting">hosting</h4>
+
+<p>you can simply host it by creating a free github repository on github.com and fork the <a href="https://github.com/project-serum/serum-dex-ui">serum-dex-ui</a> repository, customize it, and enable github pages.
+you can clone it locally, modify your wallet addresses and rebuild and deploy your app with <code class="language-plaintext highlighter-rouge">yarn deploy</code> and everything on github pages will be updated</p>
+
+<h4 id="quick-install-development-server">quick install development server</h4>
+<p>=====================================</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone git@github.com:project-serum/serum-dex-ui.git
+<span class="nb">cd </span>serum-dex-ui
+yarn
+yarn start
+</code></pre></div></div>
+
+<h4 id="build-and-deploy-to-github-pages">build and deploy to github pages</h4>
+<p>=====================================</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yarn deploy
+</code></pre></div></div>
+
+<h4 id="customize-slogan-logos-colors-etc">customize slogan, logos, colors, etc.</h4>
+
+<p>you modifiy the logo files in src/assets/logo.svg, public/
+slogan: src/components/TopBar.tsx, LINE 145
+for css you edit src/ant-custom.less</p>
+
+<h3 id="links">links</h3>
+
+<ul>
+  <li><a href="https://github.com/project-serum/serum-dex-ui">Serum Dex Ui Example</a></li>
+  <li><a href="https://docs.bonfida.com/">bonfida docs</a></li>
+  <li><a href="https://docs.bonfida.com/#trading-view">bonfida docs tradingview</a></li>
+  <li><a href="https://docs.projectserum.com/">serum docs</a></li>
+  <li><a href="https://discord.gg/jYJ84tXMYV">NEXTLEVELTRADING Discord</a></li>
+</ul>
+
+:ET
