@@ -21,7 +21,7 @@ for the datafeed you need to display correct chart data with tradingview on your
 
 ### the conclusion
 
-i spent 90% figuring out the complexity and the dependencies of the different services like "serum" und "bonfida" which is paid and discover that without the data, you can pretty much only offer a orderbook directly from serum, but the question, will their service also become subscription only in the future? i'm not sure.
+i spent 90% figuring out the complexity and the dependencies of the different services like "serum" und "bonfida" which is a paid subscription only to discover that without the data, you can pretty much only offer a orderbook directly from serum, but the question, will their service also become subscription only in the future? i'm not sure.
 
 all that said, we still learned some valueable lessons and still here is some more stuff i gathered when trying to do this.
 
