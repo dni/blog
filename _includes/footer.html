@@ -29,26 +29,15 @@
         <p>{{- site.description | escape -}}</p>
       </div>
     </div>
+    <style type="text/css"> .btcpay-form { display: inline-flex; align-items: center; justify-content: center; } .btcpay-form--inline { flex-direction: row; } .btcpay-form--block { flex-direction: column; } .btcpay-form--inline .submit { margin-left: 15px; } .btcpay-form--block select { margin-bottom: 10px; } .btcpay-form .btcpay-custom-container{ text-align: center; }.btcpay-custom { display: flex; align-items: center; justify-content: center; } .btcpay-form .plus-minus { cursor:pointer; font-size:25px; line-height: 25px; background: #DFE0E1; height: 30px; width: 45px; border:none; border-radius: 60px; margin: auto 5px; display: inline-flex; justify-content: center; } .btcpay-form select { -moz-appearance: none; -webkit-appearance: none; appearance: none; color: currentColor; background: transparent; border:1px solid transparent; display: block; padding: 1px; margin-left: auto; margin-right: auto; font-size: 11px; cursor: pointer; } .btcpay-form select:hover { border-color: #ccc; } #btcpay-input-price { -moz-appearance: none; -webkit-appearance: none; border: none; box-shadow: none; text-align: center; font-size: 25px; margin: auto; border-radius: 5px; line-height: 35px; background: #fff; } #btcpay-input-price::-webkit-outer-spin-button, #btcpay-input-price::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; } </style>
+<form method="POST" action="https://btcpay.hostinghelden.at/api/v1/invoices" class="btcpay-form btcpay-form--block">
+  <input type="hidden" name="storeId" value="9LFPB7jaJ6VrcMXDbbcQNhinPgoUHrfHALTfDJehvvwK" />
+  <input type="hidden" name="currency" value="USD" />
+<button type="submit" class="submit" name="submit" style="min-width:146px; min-height:40px; border-radius: 4px;border-style: none;background-color: #0f3b21;" alt="Pay with BtcPay, Self-Hosted Bitcoin Payment Processor"><span style="color:#fff">Donate via</span>
+<img src="https://btcpay.hostinghelden.at/img/logo.svg" style="height:40px;display:inline-block;padding: 5% 0 5% 5px;vertical-align: middle;">
+</button></form>
 
 
-      <style type="text/css"> .btcpay-form { display: inline-flex; align-items: center; justify-content: center; } .btcpay-form--inline { flex-direction: row; } .btcpay-form--block { flex-direction: column; } .btcpay-form--inline .submit { margin-left: 15px; } .btcpay-form--block select { margin-bottom: 10px; } .btcpay-form .btcpay-custom-container{ text-align: center; }.btcpay-custom { display: flex; align-items: center; justify-content: center; } .btcpay-form .plus-minus { cursor:pointer; font-size:25px; line-height: 25px; background: #DFE0E1; height: 30px; width: 45px; border:none; border-radius: 60px; margin: auto 5px; display: inline-flex; justify-content: center; } .btcpay-form select { -moz-appearance: none; -webkit-appearance: none; appearance: none; color: currentColor; background: transparent; border:1px solid transparent; display: block; padding: 1px; margin-left: auto; margin-right: auto; font-size: 11px; cursor: pointer; } .btcpay-form select:hover { border-color: #ccc; } #btcpay-input-price { -moz-appearance: none; -webkit-appearance: none; border: none; box-shadow: none; text-align: center; font-size: 25px; margin: auto; border-radius: 5px; line-height: 35px; background: #fff; } #btcpay-input-price::-webkit-outer-spin-button, #btcpay-input-price::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; } </style>
-    <form method="POST" onsubmit="onBTCPayFormSubmit(event);return false" action="https://btcpay.hostinghelden.at/api/v1/invoices" class="btcpay-form btcpay-form--inline">
-      <input type="hidden" name="storeId" value="9LFPB7jaJ6VrcMXDbbcQNhinPgoUHrfHALTfDJehvvwK" />
-      <input type="hidden" name="jsonResponse" value="true" />
-      <div class="btcpay-custom-container">
-        <div class="btcpay-custom">
-          <button class="plus-minus" onclick="event.preventDefault(); var el=document.querySelector('#btcpay-input-price'); var price = parseInt(el.value); if((price - 1 )< 1) { el.value = 1} else {el.value = parseInt(el.value) - 1 }">-</button>
-          <button class="plus-minus" onclick="event.preventDefault(); var el=document.querySelector('#btcpay-input-price'); var price = parseInt(el.value); if((price + 1 )> 100) { el.value = 100} else {el.value = parseInt(el.value) + 1 }">+</button>
-        </div>
-        <select name="currency">
-          <option value="USD">USD</option>
-          <option value="GBP">GBP</option>
-          <option value="EUR" selected>EUR</option>
-          <option value="BTC">BTC</option>
-        </select>
-      </div>
-      <input type="image" class="submit" name="submit" src="https://btcpay.hostinghelden.at/img/paybutton/pay.svg" style="width:146px" alt="Pay with BtcPay, Self-Hosted Bitcoin Payment Processor">
-    </form>
   </div>
 
 </footer>
