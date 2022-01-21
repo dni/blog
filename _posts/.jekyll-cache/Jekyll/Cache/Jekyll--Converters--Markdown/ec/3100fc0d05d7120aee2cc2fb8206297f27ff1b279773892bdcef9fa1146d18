@@ -1,0 +1,26 @@
+I"Ÿ<h1 id="build-dependencies">build dependencies</h1>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>pacman <span class="nt">-S</span> build-essentials fakeroot bc flex bison autoconf</code></pre></figure>
+
+<h1 id="configure">configure</h1>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">git clone https://github.com/dreemurrs-embedded/Pine64-Arch
+<span class="nb">cd </span>Pine64-Arch/PKGBUILDS/pine64/linux-pine64/
+vim config
+makepkg <span class="nt">-s</span></code></pre></figure>
+
+<h3 id="if-build-fails">if build fails</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">rm</span> <span class="nt">-r</span> src/</code></pre></figure>
+
+<h1 id="install-kernel">install kernel</h1>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">sudo </span>pacman <span class="nt">-U</span> linux-pine64..... pkg.tar.xz</code></pre></figure>
+
+<h1 id="links">Links</h1>
+
+<ul>
+  <li><a href="https://github.com/dreemurrs-embedded/Pine64-Arch">Github Repository</a></li>
+  <li>Matrix: #archmobile:kde.org</li>
+</ul>
+:ET
