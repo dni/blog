@@ -1,4 +1,4 @@
-I"Ã<hr />
+I"á<hr />
 
 <h1 id="introduction">introduction</h1>
 <p>i just wanna share my experience here, i finally found a debugger in vim i like to use</p>
@@ -65,7 +65,10 @@ here is the php configuration i use for my typo3 projects, .vimspector.json</p>
 <hr />
 
 <h1 id="compiling-vim-with-latest-python38-support-on-ubuntu">compiling vim with latest python3.8 support on ubuntu</h1>
-<p>i sadly had to compile vim and my development ubuntu machines :( and arch it was no problem at all</p>
+<p>i sadly had to compile vim and my development ubuntu machines :( and arch it was no problem at all.</p>
+<ul>
+  <li><a href="https://github.com/dni/scripts/blob/main/server/ubuntu/devtools.sh#L9">vim compile script</a></li>
+</ul>
 
 <hr />
 
@@ -95,10 +98,6 @@ nnoremap &lt;leader&gt;m :MaximizerToggle&lt;CR&gt;
 "inoremap &lt;leader&gt;m &lt;C-o&gt;:MaximizerToggle&lt;CR&gt;
 
 </code></pre></div></div>
-
-<hr />
-
-<p><img src="/images/lnbits.jpg" alt="lnbits screenshot" class="img-responsive" /></p>
 
 <hr />
 
