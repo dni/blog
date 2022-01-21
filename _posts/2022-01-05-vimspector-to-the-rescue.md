@@ -116,7 +116,7 @@ nnoremap <leader>m :MaximizerToggle<CR>
 links
 =====
 
-* [.vimrc](https://github.com/dni/.dotfiles/vim/.vimrc)
+* [.vimrc](https://github.com/dni/.dotfiles/blob/main/vim/.vimrc)
 * [dotfiles](https://github.com/dni/.dotfiles)
 * [ubuntu vim compile script](https://github.com/dni/scripts/blob/main/server/ubuntu/devtools.sh#L9)
 * [vimspector](https://github.com/puremourning/vimspector)
