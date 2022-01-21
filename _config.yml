@@ -24,6 +24,7 @@ url: "http://blog.dnilabs.com" # the base hostname & protocol for your site, e.g
 website: "https://www.dnilabs.at/"
 twitter_username: dnilabs
 github_username:  dni
+twitch_username:  dni256
 
 # Build settings
 theme: minima
