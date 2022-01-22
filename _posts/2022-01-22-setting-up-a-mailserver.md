@@ -8,20 +8,20 @@ title:  "setting up a mailserver on ubuntu server"
 after many tries and failures, i finally did it
 ===============================================
 
-i recently stumpled upon this very nice [emailwiz](https://github.com/LukeSmithxyz/emailwiz) script from LukeSmithxyz on github. Inspired by that a gave setting up my own mailserver another try. Its been running for weeks now and i had no troubles so far.
+i recently stumpled upon this very nice [emailwiz](https://github.com/LukeSmithxyz/emailwiz) script from LukeSmithxyz on github. Inspired by that, i gave setting up my own mailserver another try. It was surprisingly simple, it is running for weeks now and i had no troubles so far.
 
 ---
 
 modification
 ============
 i modified the script a little bit more included the certbot stuff and patches some stuff i found on the github issues pages.
-[install-email](https://github.com/dni/scripts/blob/main/server/install-email.sh)
+Github link: [install-email](https://github.com/dni/scripts/blob/main/server/install-email.sh)
 
 ---
 
 multiple mailboxes and domains
 ==============================
-i browsed the web a little bit and found this 2 useful resources [postfix virtual](http://www.postfix.org/VIRTUAL_README.html)
+for this i had browse the web a little while and found this 2 useful resources [postfix virtual](http://www.postfix.org/VIRTUAL_README.html)
 and [linuxbabe](https://www.linuxbabe.com/redhat/host-multiple-mail-domains-in-postfixadmin-centos-rhel).
 
 1. you have to add a new unix user for each mailbox
@@ -53,7 +53,7 @@ postconf -e "virtual_alias_maps = hash:/etc/postfix/virtual"
 cat <<EOF
 postmaster@domain1.com   postmaster
 office@domain1.com       oldaccount
-admin@dnilabs.com        oldaccount
+admin@domain1.com        oldaccount
 postmaster@domain2.org   postmaster
 info@domain2.org         newaccount
 EOF > /etc/postfix/virtual
