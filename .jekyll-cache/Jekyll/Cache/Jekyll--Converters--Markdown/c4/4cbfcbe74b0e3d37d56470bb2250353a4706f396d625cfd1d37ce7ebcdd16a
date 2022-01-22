@@ -1,0 +1,26 @@
+I"á<hr />
+
+<p>i recently stumpled upon this very nice <a href="https://github.com/LukeSmithxyz/emailwiz">emailwiz</a> script from LukeSmithxyz on github. Inspired by that a gave setting up my own. Its been running for weeks now and i had no troubles so far.</p>
+
+<hr />
+
+<h1 id="modification">modification</h1>
+<p>i modified the script a little bit more included the certbot stuff and patches some stuff i found on the github issues pages.
+<a href="https://github.com/dni/scripts/server/install-email.sh">install-email</a></p>
+
+<hr />
+
+<h1 id="multiple-aliases">multiple aliases</h1>
+<p>you have to add a new unix user</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> useradd -aG mail newaccount
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="links">links</h1>
+
+<ul>
+  <li><a href="https://github.com/LukeSmithxyz/emailwiz">emailwiz</a></li>
+  <li><a href="https://github.com/dni/scripts/server/install-email.sh">install-email</a></li>
+</ul>
+:ET

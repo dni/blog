@@ -1,0 +1,61 @@
+I"«<hr />
+
+<p>i recently stumpled upon this very nice <a href="https://github.com/LukeSmithxyz/emailwiz">emailwiz</a> script from LukeSmithxyz on github. Inspired by that a gave setting up my own mailserver another try. Its been running for weeks now and i had no troubles so far.</p>
+
+<hr />
+
+<h1 id="requirement">requirement</h1>
+
+<hr />
+
+<h1 id="modification">modification</h1>
+<p>i modified the script a little bit more included the certbot stuff and patches some stuff i found on the github issues pages.
+<a href="https://github.com/dni/scripts/server/install-email.sh">install-email</a></p>
+
+<hr />
+
+<h1 id="multiple-mailboxes-and-domains">multiple mailboxes and domains</h1>
+<p>i browsed the web a little but and found this 2 useful resources</p>
+<ol>
+  <li>you have to add a new unix user for each mailbox
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> useradd -aG mail newaccount
+ passwd newaccount
+</code></pre></div>    </div>
+  </li>
+  <li>expand the ssl certificate
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>certbot certonly --webroot --agree-tos --text --non-interactive --webroot-path /var/www/html -d mail.domain1.com,mail.domain2.org --expand
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>for first time using more than 1 accounts you also need to configure postfix <code class="language-plaintext highlighter-rouge">main.cf</code> and add a file <code class="language-plaintext highlighter-rouge">virtual</code>.
+important! do not add you main domain <code class="language-plaintext highlighter-rouge">domain1.com</code> to your <code class="language-plaintext highlighter-rouge">virtual_alias_domains</code>.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>postconf -e "virtual_alias_domains = domain2.org"
+postconf -e "virtual_alias_maps = hash:/etc/postfix/virtual"
+cat &lt;&lt;EOF
+postmaster@domain1.com   postmaster
+office@domain1.com       olduser
+admin@dnilabs.com        olduser
+postmaster@domain2.org   postmaster
+info@domain2.org         newaccount
+EOF &gt; /etc/postfix/virtual
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="mail-client---mutt">mail client - mutt</h1>
+<p>i also use mutt for mail and i found this very nice <a href="https://github.com/LukeSmithxyz/mutt-wizard">mutt-wizard</a> script
+also from LukeSmithxyz, for setting up the addresses. it is very well documented.
+you need to install <code class="language-plaintext highlighter-rouge">neomutt</code> for this to work properly.</p>
+
+<hr />
+
+<h1 id="links">links</h1>
+
+<ul>
+  <li><a href="https://github.com/LukeSmithxyz/emailwiz">emailwiz</a></li>
+  <li><a href="https://github.com/dni/scripts/server/install-email.sh">install-email</a></li>
+  <li><a href="http://www.postfix.org/VIRTUAL_README.html">postfix virtual</a></li>
+  <li><a href="https://github.com/LukeSmithxyz/mutt-wizard">mutt-wizard</a></li>
+</ul>
+:ET
