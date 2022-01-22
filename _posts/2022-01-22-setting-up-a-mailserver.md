@@ -14,7 +14,7 @@ i recently stumpled upon this very nice [emailwiz](https://github.com/LukeSmithx
 
 modification
 ============
-i modified the script a little bit more included the certbot stuff and patches some stuff i found on the github issues pages.
+i modified the script a little bit more included the certbot stuff and patched some stuff i found on the github issues pages.
 Github link: [install-email](https://github.com/dni/scripts/blob/main/server/install-email.sh)
 
 ---
