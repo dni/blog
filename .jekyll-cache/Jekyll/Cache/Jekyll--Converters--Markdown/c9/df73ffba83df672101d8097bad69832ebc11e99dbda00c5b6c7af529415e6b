@@ -1,0 +1,83 @@
+I"ó<hr />
+
+<h1 id="setting-up-the-user-and-filesystem">setting up the user and filesystem</h1>
+<p>for a filesystem in created a ebs volume with 500GB magnetic storage (i know not ideal but cheaper). i assigned it to the
+ec2 instance, formatted and mounted it into the home directory of newly created btc user. all commands are ran as <code class="language-plaintext highlighter-rouge">root</code>.
+check disks with <code class="language-plaintext highlighter-rouge">lsblk</code>.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fsdisk /dev/xvdX
+mkfs.ext4 /dev/xvdX
+mkdir /home/btcnode
+mount /dev/xvdX /home/btcnode
+UUID=$(blkid | cut -d '"' -f 2 | tail -n 1)
+echo "UUID=$UUID /home/btcnode ext4 defaults 0 2" &gt;&gt; /etc/fstab
+</code></pre></div></div>
+<p>create the user</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>useradd btcnode
+passwd btcnode
+chown btc:btc /home/btcnode
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="dependencies-for-bitcoin-core-and-c-lightning">dependencies for bitcoin-core and c-lightning</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install -y autoconf automake build-essential libtool autotools-dev pkg-config bsdmainutils \
+  python3 libevent-dev libboost-dev libboost-system-dev libboost-filesystem-dev libboost-test-dev \
+  libgmp-dev libsqlite3-dev python3-mako net-tools zlib1g-dev libsodium-dev gettext
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="building-bitcoin-core-from-the-git-repository">building bitcoin-core from the git repository</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/bitcoin/bitcoin/ /home/btcnode/bitcoin_source
+cd /home/btcnode/bitcoin_source
+./autogen.sh
+./configure --without-gui --without-miniupnpc
+make
+make install
+</code></pre></div></div>
+
+<hr />
+
+<h1 id="building-c-lighting-from-the-git-repository">building c-lighting from the git repository</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "building c lightning..."
+pip3 install --user mrkd mistune==0.8.4
+git clone https://github.com/ElementsProject/lightning.git /home/btcnode/lightning_source
+cd lightning_source
+./configure
+make
+make install
+</code></pre></div></div>
+
+<h1 id="running-the-nodes">running the nodes</h1>
+<ul>
+  <li>running bitcoind and lightningd manually
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bitcoind &amp;
+./lightningd/lightningd &amp;
+./cli/lightning-cli help"
+</code></pre></div>    </div>
+  </li>
+  <li>use initd scripts
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TODO
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<hr />
+
+<h1 id="install-script">install script</h1>
+<p>i created a install script for ubuntu server including everything i wrote here.
+i am also planning on extending this with more applikations like, lnbits, ride the lightning, and many more.
+Github link: <a href="https://github.com/dni/scripts/blob/main/server/install-bitcoin.sh">install-bitcoin</a></p>
+
+<hr />
+
+<h1 id="links">links</h1>
+
+<ul>
+  <li><a href="https://github.com/dni/scripts/blob/main/server/install-bitcoin.sh">install-bitcoin</a></li>
+  <li><a href="https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md">bitcoin core build-unix</a></li>
+  <li><a href="https://github.com/ElementsProject/lightning/blob/master/doc/INSTALL.md#to-build-on-ubuntu">c-lightning ubuntu build</a></li>
+  <li><a href="https://github.com/Ride-The-Lightning">ride the lightning</a></li>
+  <li><a href="https://github.com/lnbits">lnbits</a></li>
+</ul>
+:ET
