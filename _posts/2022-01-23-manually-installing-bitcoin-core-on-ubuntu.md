@@ -8,7 +8,7 @@ title:  "building and setup of bitcoin core and lightning node on ubuntu server 
 setting up the user and filesystem
 ==================================
 for a filesystem in created a ebs volume with 500GB magnetic storage (i know not ideal but cheaper). i assigned it to the
-ec2 instance, formatted and mounted it into the home directory of newly created btc user. all commands are ran as `root`.
+ec2 instance (t2.micro), formatted and mounted it into the home directory of newly created btc user. all commands are ran as `root`.
 check disks with `lsblk`.
 ```
 fsdisk /dev/xvdX
