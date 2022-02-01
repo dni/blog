@@ -78,6 +78,12 @@ TXT mail-domain2._domainkey.domain2.org "v=DKIM1; h=sha256; k=rsa; \""
 ```
 ---
 
+reload configuration afterwards
+```
+postmap /etc/postfix/virtual
+postfix reload
+```
+
 mail client - mutt
 ==================
 i also use mutt for mail and i found this very nice [mutt-wizard](https://github.com/LukeSmithxyz/mutt-wizard) script
