@@ -27,7 +27,7 @@ and [linuxbabe](https://www.linuxbabe.com/redhat/host-multiple-mail-domains-in-p
 
 1. you have to add a new unix user for each mailbox
 ```
- useradd -aG mail newaccount
+ useradd -m -G mail newaccount
  passwd newaccount
 ```
 
