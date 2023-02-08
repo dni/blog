@@ -1,3 +1,0 @@
-I"Å<p>In my new company we needed to securely share passwords over serveral admins and keep them in sync, i already used the unix password manager <a href="https://www.passwordstore.org/">pass</a>. So the problem arised that i need to keep my private passwords and my companies password seperate and also decrypt with multiple keys. It turns out this is quite easier than i thought.</p>
-
-:ET
