@@ -15,7 +15,7 @@ i recently stumpled upon this very nice [emailwiz](https://github.com/LukeSmithx
 modification
 ============
 i modified the script a little bit more included the certbot stuff and patched some stuff i found on the github issues pages.
-Github link: [install-email](https://github.com/dni/scripts/blob/main/server/install-email.sh)
+Github link: [install-email](https://github.com/dni/scripts/blob/main/server/ubuntu/email.sh)
 neue version
 
 ---
@@ -96,7 +96,7 @@ links
 =====
 
 * [emailwiz](https://github.com/LukeSmithxyz/emailwiz)
-* [install-email](https://github.com/dni/scripts/blob/main/server/install-email.sh)
+* [install-email](https://github.com/dni/scripts/blob/main/server/ubuntu/email.sh)
 * [postfix virtual](http://www.postfix.org/VIRTUAL_README.html)
 * [linuxbabe](https://www.linuxbabe.com/redhat/host-multiple-mail-domains-in-postfixadmin-centos-rhel)
 * [mutt-wizard](https://github.com/LukeSmithxyz/mutt-wizard)

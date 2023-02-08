@@ -27,7 +27,7 @@ chown btc:btc /home/btcnode
 
 ---
 
-dependencies for bitcoin-core and c-lightning
+dependencies for bitcoin-core
 =============================================
 ```
 apt install -y autoconf automake build-essential libtool autotools-dev pkg-config bsdmainutils \
@@ -88,7 +88,7 @@ Github link: [install-bitcoin](https://github.com/dni/scripts/blob/main/server/i
 links
 =====
 
-* [install-bitcoin](https://github.com/dni/scripts/blob/main/server/install-bitcoin.sh)
+* [install-bitcoin](https://github.com/dni/scripts/blob/main/server/ubuntu/bitcoin-core.sh)
 * [bitcoin core build-unix](https://github.com/bitcoin/bitcoin/blob/master/doc/build-unix.md)
 * [c-lightning ubuntu build](https://github.com/ElementsProject/lightning/blob/master/doc/INSTALL.md#to-build-on-ubuntu)
 * [ride the lightning](https://github.com/Ride-The-Lightning)
