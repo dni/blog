@@ -1,28 +1,17 @@
 <footer class="site-footer h-card">
-  <data class="u-url" href="{{ "/" | relative_url }}"></data>
-  <div class="wrapper">
-    <h2 class="footer-heading">{{ site.title | escape }}</h2>
-    <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          {%- if site.email -%}
-          <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-          {%- endif -%}
-          <li><a href="https://twitter.com/dnilabs">Twitter</a></li>
-          <li><a href="https://twitch.tv/dni256">Twitch</a></li>
-        </ul>
-      </div>
-      <div class="footer-col footer-col-2">
-        {%- include social.html -%}
-        <br />
-        Nostr: npub1rj2vpdz9wlklg9gf63e6jtvl0d4uqn36uplhqhnsns5envwnup6q3xag4u
-      </div>
-      <div class="footer-col footer-col-3">
+    <data class="u-url" href="{{ "/" | relative_url }}"></data>
+    <div class="wrapper">
         <p>{{- site.description | escape -}}</p>
-        <a href="https://lnbits.b1tco1n.org/tipjar/1">Lightning Donations</a>
+        Lightning Address: <a target="_blank" href="lightning://dni.600.wtf">dni@600.wtf</a>
         <br />
-        Lightning Address: <a href="lightning://dni.600.wtf">dni@600.wtf</a>
-      </div>
+        Nostr: <a target="_blank" href="https://iris.to/dni@600.wtf">dni@600.wtf</a>
+        <br />
+        {%- if site.email -%}
+        <a target="_blank" class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a>
+        <br />
+        {%- endif -%}
+        <a target="_blank" href="https://twitter.com/dnilabs">Twitter</a>, <a href="https://twitch.tv/dni256">Twitch</a>
+        <br />
+        <a target="_blank" href="https://lnbits.b1tco1n.org/tipjar/1">Donate with Lightning</a>
     </div>
-  </div>
 </footer>
