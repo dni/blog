@@ -27,7 +27,7 @@ github_username:  dni
 twitch_username:  dni256
 
 # Build settings
-theme: minima
+# theme: minima
 remote_theme: jekyll/minima
 minima:
   skin: solarized-dark
