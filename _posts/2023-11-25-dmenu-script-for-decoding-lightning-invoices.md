@@ -10,7 +10,7 @@ It uses the `bolt11` python module from LNbits and also `jq` for parsing the jso
 
 ### Function
 The script checks if there is a string starting with `ln` or `LN` in your clipboard else it will send a notification `not a lightning invoice`.
-Then it will run the decoder and preview the beautified json inside a dmenu window. This allow you to search for a key and easily copy that line. If you hit enter on the `{` key it will copy the whole json. If you hit ESC, it will not copy anything.
+Then it will run the decoder and preview the beautified json inside a dmenu window. This allows you to search for a key and easily copy it. If you hit enter on the `{` key it will copy the whole json. If you hit ESC, it will not copy anything.
 
 
 ### Dependencies
@@ -49,6 +49,6 @@ in this video i show using the decoder in my setup, i bound it to `super-c + i`
 Links:
 =====
 * [youtube](https://youtu.be/zJefEQVEs8Q)
-* [dmenu script](https://github.com/dni/scripts/userspace/dmenu.sh#44)
+* [dmenu script](https://github.com/dni/scripts/tree/main/userspace/dmenu.sh#L44)
 * [dotfiles](https://github.com/dni/.dotfiles)
 * [LNbits bolt11 repository](https://github.com/lnbits/bolt11)
