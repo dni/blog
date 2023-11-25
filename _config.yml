@@ -28,6 +28,7 @@ twitch_username:  dni256
 
 # Build settings
 theme: minima
+remote_theme: jekyll/minima
 minima:
   skin: solarized-dark
 plugins:
